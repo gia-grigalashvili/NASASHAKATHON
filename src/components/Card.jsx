@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styled from 'styled-components';
 import graped from "/public/imgs/32c9bf9577d8e7d5f6582544b4df596d.jpg";
 import saz from "/public/imgs/086e8ae63e53bbc5caa3b6b3a4300d18.jpg";

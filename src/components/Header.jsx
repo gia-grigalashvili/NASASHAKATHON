@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Logo from "/public/imgs/605a947c2d662438d332bb78_logo-nft-webflow-template.png";
 
-
 function Header() {
   const [showModal, setShowModal] = useState(false);
-  const [isLogin, setIsLogin] = useState(true); // true for login, false for signup
+  const [isLogin, setIsLogin] = useState(true);
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    // Handle the form submission, such as sending data to the server
+    // Reset the form and close the modal
+    reset();
+    setShowModal(false);
+  };
 
   const toggleModal = (type) => {
     setIsLogin(type === 'login');
     setShowModal(!showModal);
+    reset(); // Reset the form when modal is toggled
   };
 
   return (
@@ -18,7 +28,7 @@ function Header() {
         <img src={Logo} alt="Company Logo" />
         <h1>EcoShade</h1>
       </LogoWrapper>
-     
+
       <ButtonContainer>
         <button className="loginButton" onClick={() => toggleModal('login')}>
           <span>Login</span>
@@ -32,20 +42,79 @@ function Header() {
         <ModalOverlay aria-modal="true" role="dialog">
           <ModalContent>
             <h2>{isLogin ? 'Login' : 'Signup'}</h2>
-            {isLogin ? (
-              <>
-                <input type="text" placeholder="Username" />
-                <input type="password" placeholder="Password" />
-              </>
-            ) : (
-              <>
-                <input type="text" placeholder="Username" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-              </>
-            )}
-            <button onClick={() => setShowModal(false)}>Submit</button>
-            <CloseButton onClick={() => setShowModal(false)}>Close</CloseButton>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <input
+                type="text"
+                placeholder="Username"
+                {...register('username', { required: 'Username is required' })}
+              />
+              {errors.username && <Error>{errors.username.message}</Error>}
+
+              {isLogin ? (
+                <>
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    {...register('password', { required: 'Password is required' })}
+                  />
+                  {errors.password && <Error>{errors.password.message}</Error>}
+                </>
+              ) : (
+                <>
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    {...register('email', {
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^\S+@\S+\.\S+$/,
+                        message: 'Invalid email address',
+                      },
+                    })}
+                  />
+                  {errors.email && <Error>{errors.email.message}</Error>}
+
+                  <input
+                    type="text"
+                    placeholder="Country"
+                    {...register('country', { required: 'Country is required' })}
+                  />
+                  {errors.country && <Error>{errors.country.message}</Error>}
+
+                  <input
+                    type="text"
+                    placeholder="Region"
+                    {...register('region', { required: 'Region is required' })}
+                  />
+                  {errors.region && <Error>{errors.region.message}</Error>}
+
+                  <input className='textswrite'
+                    type="text"
+                    placeholder="Write text"
+                    {...register('text', { required: 'Text is required' })}
+                  />
+                  {errors.text && <Error>{errors.text.message}</Error>}
+
+                  <input
+  type="password"
+  placeholder="Password"
+  {...register('password', {
+    required: 'Password is required',
+    minLength: {
+      value: 7,
+      message: 'Password must be at least 7 characters long',
+    },
+  })}
+/>
+{errors.password && <Error>{errors.password.message}</Error>}
+                </>
+              )}
+              <button type="submit">Submit</button>
+            </form>
+            <CloseButton onClick={() => {
+              setShowModal(false);
+              reset(); // Clear form and errors on modal close
+            }}>Close</CloseButton>
           </ModalContent>
         </ModalOverlay>
       )}
@@ -53,12 +122,16 @@ function Header() {
   );
 }
 
+const Error = styled.p`
+  color: red;
+  font-size: 12px;
+`;
+
 const HeaderWrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 20px 5%;
-  
   color: white;
   h1 {
     font-size: 24px;
@@ -67,14 +140,14 @@ const HeaderWrapper = styled.header`
 `;
 
 const LogoWrapper = styled.div`
-display: flex;
-gap: 20px;
-align-items: center;
+  display: flex;
+  gap: 20px;
+  align-items: center;
   img {
     width: 50px;
     height: 50px;
   }
-  h1{
+  h1 {
     color: #e4e4e4e8;
   }
 `;
@@ -82,7 +155,6 @@ align-items: center;
 const ButtonContainer = styled.div`
   display: flex;
   gap: 20px;
-  
   button {
     background: none;
     border: 2px solid #8900f1;
@@ -91,11 +163,9 @@ const ButtonContainer = styled.div`
     padding: 10px 20px;
     color: white;
     transition: color 0.3s ease, border-color 0.3s ease;
-    
     span {
       font-size: 16px;
     }
-    
     &:hover {
       color: red;
       border-color: red;
@@ -124,15 +194,28 @@ const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  width: 300px;
-  
+  width: 450px;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .textswrite {
+    height: 100px; /* Height of the textarea */
+    text-align: left; /* Align text to the left */
+    resize: none; /* Prevent resizing if not needed */
+    padding: 10px; /* Add padding */
+    font-size: 16px; /* Font size */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 5px; /* Rounded corners */
+    overflow-y: auto; /* Allow scrolling for overflow text */
+}
+  }
   input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
   }
-
   button {
     padding: 10px;
     font-size: 16px;
@@ -141,7 +224,6 @@ const ModalContent = styled.div`
     color: white;
     border: none;
     border-radius: 5px;
-
     &:hover {
       background-color: #0056b3;
     }
@@ -155,7 +237,6 @@ const CloseButton = styled.button`
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
-
   &:hover {
     background-color: darkred;
   }

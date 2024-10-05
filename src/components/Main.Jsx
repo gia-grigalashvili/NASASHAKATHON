@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import { Link } from 'react-router-dom';
 function Main() {
   return (
     <Maindiv>
@@ -9,9 +9,11 @@ function Main() {
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel purus cras
          curabitur eget facilisis nisl. Neque a porttitor .</p>
          </div>
-<button>
-    <h2>Demo application</h2>
-</button>
+         <Link to="/information"> 
+        <button>
+          <h2>Demo application</h2>
+        </button>
+      </Link>
     </Maindiv>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styled from 'styled-components';
 import Logo from "/public/imgs/605a947c2d662438d332bb78_logo-nft-webflow-template.png";
 import Twiter from "/public/imgs/free-twitter-logo-icon-2429-thumb.png"
