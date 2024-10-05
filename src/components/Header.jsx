@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Logo from "/public/imgs/605a947c2d662438d332bb78_logo-nft-webflow-template.png";
 
+
 function Header() {
   const [showModal, setShowModal] = useState(false);
   const [isLogin, setIsLogin] = useState(true); // true for login, false for signup
@@ -12,19 +13,23 @@ function Header() {
   };
 
   return (
-    <Headers>
-      <img src={Logo} alt="Logo" />
-      <div className="maindiv"> 
-        <button className="loginss" onClick={() => toggleModal('login')}>
-          <h1>logins</h1>
+    <HeaderWrapper>
+      <LogoWrapper>
+        <img src={Logo} alt="Company Logo" />
+        <h1>EcoShade</h1>
+      </LogoWrapper>
+     
+      <ButtonContainer>
+        <button className="loginButton" onClick={() => toggleModal('login')}>
+          <span>Login</span>
         </button>
-        <button className="signup" onClick={() => toggleModal('signup')}>
-          <h1>signup</h1>
+        <button className="signupButton" onClick={() => toggleModal('signup')}>
+          <span>Signup</span>
         </button>
-      </div>
+      </ButtonContainer>
 
       {showModal && (
-        <ModalOverlay>
+        <ModalOverlay aria-modal="true" role="dialog">
           <ModalContent>
             <h2>{isLogin ? 'Login' : 'Signup'}</h2>
             {isLogin ? (
@@ -40,47 +45,60 @@ function Header() {
               </>
             )}
             <button onClick={() => setShowModal(false)}>Submit</button>
-            <button onClick={() => setShowModal(false)}>Close</button>
+            <CloseButton onClick={() => setShowModal(false)}>Close</CloseButton>
           </ModalContent>
         </ModalOverlay>
       )}
-    </Headers>
+    </HeaderWrapper>
   );
 }
 
-const Headers = styled.div`
+const HeaderWrapper = styled.header`
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 5%;
+  
+  color: white;
+  h1 {
+    font-size: 24px;
+    font-family: 'Edu AU VIC WA NT Guides', sans-serif;
+  }
+`;
 
+const LogoWrapper = styled.div`
+display: flex;
+gap: 20px;
+align-items: center;
   img {
-    width: 130px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
   }
+  h1{
+    color: #e4e4e4e8;
+  }
+`;
 
-  .maindiv {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    border: 2px solid red; /* Add red border */
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px;
+  
+  button {
+    background: none;
+    border: 2px solid #8900f1;
     border-radius: 30px;
-
-    h1 {
-      font-size: 20px;
-      color: #fff;
-    }
-  }
-
-  .loginss, .signup {
-    background: none; 
-    border: none;
     cursor: pointer;
-
-    h1 {
-      transition: color 0.3s ease; 
+    padding: 10px 20px;
+    color: white;
+    transition: color 0.3s ease, border-color 0.3s ease;
+    
+    span {
+      font-size: 16px;
     }
-
-    &:hover h1 {
-      color: red; 
+    
+    &:hover {
+      color: red;
+      border-color: red;
     }
   }
 `;
@@ -91,11 +109,11 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure it appears on top */
+  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
@@ -105,9 +123,9 @@ const ModalContent = styled.div`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 300px; /* Adjust width as needed */
-
+  gap: 15px;
+  width: 300px;
+  
   input {
     padding: 10px;
     font-size: 16px;
@@ -127,6 +145,19 @@ const ModalContent = styled.div`
     &:hover {
       background-color: #0056b3;
     }
+  }
+`;
+
+const CloseButton = styled.button`
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darkred;
   }
 `;
 
