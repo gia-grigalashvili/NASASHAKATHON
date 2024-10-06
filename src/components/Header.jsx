@@ -2,31 +2,50 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Logo from "/public/imgs/605a947c2d662438d332bb78_logo-nft-webflow-template.png";
-
+import { Link } from 'react-router-dom';
 function Header() {
   const [showModal, setShowModal] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const [passwordError, setPasswordError] = useState(''); // State for password error
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Handle the form submission, such as sending data to the server
-    // Reset the form and close the modal
-    reset();
-    setShowModal(false);
+    const storedUserData = JSON.parse(localStorage.getItem('userData'));
+
+    if (isLogin) {
+     
+      if (storedUserData && data.username === storedUserData.username && data.password === storedUserData.password) {
+        console.log("Login successful!"); 
+        setShowModal(false);
+        reset();
+        setPasswordError(''); 
+      } else {
+        setPasswordError('Invalid username or password'); 
+      }
+    } else {
+      console.log(data); 
+      localStorage.setItem('userData', JSON.stringify(data)); 
+      reset();
+      setShowModal(false);
+      setPasswordError(''); 
+    }
   };
 
   const toggleModal = (type) => {
     setIsLogin(type === 'login');
     setShowModal(!showModal);
     reset(); // Reset the form when modal is toggled
+    setPasswordError(''); // Clear error when modal opens
   };
 
   return (
     <HeaderWrapper>
       <LogoWrapper>
+        <Link  to="/">
         <img src={Logo} alt="Company Logo" />
         <h1>EcoShade</h1>
+        </Link>
+        
       </LogoWrapper>
 
       <ButtonContainer>
@@ -58,6 +77,7 @@ function Header() {
                     {...register('password', { required: 'Password is required' })}
                   />
                   {errors.password && <Error>{errors.password.message}</Error>}
+                  {passwordError && <Error>{passwordError}</Error>} {/* Display password error */}
                 </>
               ) : (
                 <>
@@ -96,17 +116,17 @@ function Header() {
                   {errors.text && <Error>{errors.text.message}</Error>}
 
                   <input
-  type="password"
-  placeholder="Password"
-  {...register('password', {
-    required: 'Password is required',
-    minLength: {
-      value: 7,
-      message: 'Password must be at least 7 characters long',
-    },
-  })}
-/>
-{errors.password && <Error>{errors.password.message}</Error>}
+                    type="password"
+                    placeholder="Password"
+                    {...register('password', {
+                      required: 'Password is required',
+                      minLength: {
+                        value: 7,
+                        message: 'Password must be at least 7 characters long',
+                      },
+                    })}
+                  />
+                  {errors.password && <Error>{errors.password.message}</Error>}
                 </>
               )}
               <button type="submit">Submit</button>
@@ -114,6 +134,7 @@ function Header() {
             <CloseButton onClick={() => {
               setShowModal(false);
               reset(); // Clear form and errors on modal close
+              setPasswordError(''); // Clear error on modal close
             }}>Close</CloseButton>
           </ModalContent>
         </ModalOverlay>
@@ -150,6 +171,14 @@ const LogoWrapper = styled.div`
   h1 {
     color: #e4e4e4e8;
   }
+  a{
+    display: flex;
+   align-items: center;
+   gap: 20px;
+   text-decoration: none; /* Remove underline */
+  color: inherit;
+  }
+
 `;
 
 const ButtonContainer = styled.div`
@@ -200,15 +229,15 @@ const ModalContent = styled.div`
     flex-direction: column;
     gap: 20px;
     .textswrite {
-    height: 100px; /* Height of the textarea */
-    text-align: left; /* Align text to the left */
-    resize: none; /* Prevent resizing if not needed */
-    padding: 10px; /* Add padding */
-    font-size: 16px; /* Font size */
-    border: 1px solid #ccc; /* Border styling */
-    border-radius: 5px; /* Rounded corners */
-    overflow-y: auto; /* Allow scrolling for overflow text */
-}
+      height: 100px; /* Height of the textarea */
+      text-align: left; /* Align text to the left */
+      resize: none; /* Prevent resizing if not needed */
+      padding: 10px; /* Add padding */
+      font-size: 16px; /* Font size */
+      border: 1px solid #ccc; /* Border styling */
+      border-radius: 5px; /* Rounded corners */
+      overflow-y: auto; /* Allow scrolling for overflow text */
+    }
   }
   input {
     padding: 10px;

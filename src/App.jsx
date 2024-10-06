@@ -25,7 +25,7 @@ function App() {
           path="/information" 
           element={<Application />} // Render Application component
         />
-        <Route path="*" element={<Navigate to="/" />} /> 
+        <Route path="*" element={<Navigate to="/inofrmation" />} /> 
       </Routes>
     </>
   );

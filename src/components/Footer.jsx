@@ -8,11 +8,12 @@ function Footer() {
     <Maindiv>
       <Info>
         <Mains>
+            
         <img src={Logo} alt="Company Logo" />
         <h1>EcoShade</h1>
         </Mains>
         
-        <p>© 2024 Your Company Name. All rights reserved.</p>
+        <p>You can contact us and we will help you</p>
         <div className='infor'>
           <img src={Instgram} alt="Twitter Icon" /> 
           <img src={Twiter} alt="Twitter Icon" />  
@@ -31,6 +32,9 @@ const Maindiv = styled.div`
   color: #ffffff;
   text-align: center;
   margin-top: 100px;
+  p{
+font-size: 21px;
+  }
 `;
 const Mains=styled.div`
     display: flex;
