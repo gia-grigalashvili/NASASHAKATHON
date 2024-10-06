@@ -3,13 +3,15 @@ import Header from './components/Header';
 import Main from './components/Main.Jsx'; // Assuming Main.jsx
 import Card from './components/Card';
 import Footer from './components/Footer';
+
 import Application from './components/Application';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 function App() {
+
   return (
     <>
-      <Header />
+      <Header   />
       <Routes>
         <Route 
           path="/" 
@@ -23,9 +25,11 @@ function App() {
         />
         <Route 
           path="/information" 
-          element={<Application />} // Render Application component
+        
+          
+          element={<Application />} 
         />
-        <Route path="*" element={<Navigate to="/inofrmation" />} /> 
+        <Route path="*"  element={<Navigate to="/inofrmation" />} /> 
       </Routes>
     </>
   );

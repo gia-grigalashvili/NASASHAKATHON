@@ -1,4 +1,4 @@
-import React from 'react'
+
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 function Main() {
@@ -6,8 +6,7 @@ function Main() {
     <Maindiv>
         <div className='info'>
       <h1>Hello! Welcome to EcoShade!</h1>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vel purus cras
-         curabitur eget facilisis nisl. Neque a porttitor .</p>
+      <p>Weve developed a virtual assistant to help farmers protect their crops from potential threats such as droughts.</p>
          </div>
          <Link to="/information"> 
         <button>

@@ -14,7 +14,7 @@ const values = [
 function Card() {
   return (
     <Maindiv>
-      <h1>NFT CARD</h1>
+      <h1>F R U I T</h1>
       <div className='inf'>
       <p>Grape ipsum dolor sit amet, watermelon adipiscing elit. Corn tincidunt magna non, grape turpis sem vitae et.
          Watermelon ut egestas sit volutpat etiam enim. Corn adipiscing rhoncus.</p>

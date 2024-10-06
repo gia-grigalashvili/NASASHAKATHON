@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import Logo from "/public/imgs/605a947c2d662438d332bb78_logo-nft-webflow-template.png";
